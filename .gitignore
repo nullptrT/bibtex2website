@@ -1,0 +1,6 @@
+.project
+build*/*
+*.bak
+*.kdev4
+*.user
+docs/*
