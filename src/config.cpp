@@ -17,24 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
 
-#include <string>
+#include "config.hpp"
 
 
-class program_config {
-public:
 // Set global variables
-static std::string color_titles;
-};
-
-
-// Check the compiler
-
-#ifndef __cplusplus
-#error A C++ compiler supporting -std=c++17 is required!
-#elif _WINDOWS
-#pragma message ("Please make sure, that your compiler supports c++17.")
-/*#elif __cplusplus <= 201603
-#error A C++ compiler supporting -std=c++17 is required!*/
-#endif
+std::string program_config::color_titles( "#649600" );

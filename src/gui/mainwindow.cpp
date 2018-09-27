@@ -20,6 +20,7 @@
 #include "ui_mainwindow.h"
 
 #include "bibtex.hpp"
+#include "../config.hpp"
 #include "html.hpp"
 #include "log.hpp"
 
@@ -102,6 +103,11 @@ void MainWindow::on_generate() {
       && ui->file->text().length() > 0
     ) {
         if ( QFile::exists( ui->folder->text() ) ) {
+            
+            if ( ui->color_code->text() > 0 ) {
+                program_config::color_titles = ui->color_code->text().toStdString();
+            }
+            
             ui->status->setText("[WebsiteGenerator/BibTeX] - Parse BibTeX-Dateien...");
             BibTeX* tex = new BibTeX();
             try {

@@ -30,7 +30,7 @@
 
 
 void help() {
-    std::cout << "Usage: bibtex2website_generator <PATH_TO_FILES> <OUTPUT> <PAGE_TITLE> [--verbose]" << std::endl;
+    std::cout << "Usage: bibtex2website_generator <PATH_TO_FILES> <OUTPUT> <PAGE_TITLE> [<COLOR_CODE>] [--verbose]" << std::endl;
 }
 
 
@@ -58,7 +58,15 @@ int main(int argc, char *argv[])
         } else {
             exit(1);
         }
-    } else if ( std::string(argv[argc-1]).compare("--verbose") == 0 ) {
+    } 
+    
+    if ( std::string(argv[argc-1]).compare( 0, 1, "#" ) == 0 ) {
+        program_config::color_titles = std::string(argv[argc-1]);
+    } else if ( std::string(argv[argc-2]).compare( 0, 1, "#" ) == 0 ) {
+        program_config::color_titles = std::string(argv[argc-2]);
+    }
+    
+    if ( std::string(argv[argc-1]).compare("--verbose") == 0 ) {
         stdlog.set_max_severity_level( logcpp::verbose );
     } else {
         stdlog.set_max_severity_level( logcpp::normal );

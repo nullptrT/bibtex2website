@@ -20,6 +20,7 @@
 #include "html.hpp"
 
 #include "bibtex.hpp"
+#include "../config.hpp"
 #include "log.hpp"
 
 #include <cctype>
@@ -75,7 +76,7 @@ HTML_BibTeXItem::HTML_BibTeXItem( const BibTeXItem* bibtex )
     ,   m_bibtex( bibtex )
 {
     if ( bibtex == 0 ) {
-        throw HTML::Exception("BibTeXItem is nullptr.");
+        throw HTML::Exception("BibTeXItem is a nullptr.");
     }
 }
 
@@ -105,7 +106,7 @@ const std::string HTML_BibTeXItem::to_html() const {
     
     html << "<li>";
     
-    html << "<span color: #649600;>" << author << "</span><br>\n";
+    html << "<span color: " << program_config::color_titles << ";>" << author << "</span><br>\n";
     
     if ( url.length() > 0 ) {
         html << "<a href=\"" << url << "\"><span style=\"text-decoration: underline;\">";
@@ -207,7 +208,7 @@ const std::string HTML_YearList::to_html() const {
     
     html << "<p><a id=\"" << this->m_year << "\" name=\"" << this->m_year << "\"></a></p>\n";
     html << "<p>&nbsp;</p>\n";
-    html << "<h3><strong><span style=\"color: #649600;\"><span class=\"c1\"><span class=\"c1\">\n";
+    html << "<h3><strong><span style=\"color: " << program_config::color_titles << ";\"><span class=\"c1\"><span class=\"c1\">\n";
     html << this->m_year << "</span></span></span></strong></h3>\n";
     html << "<p>&nbsp;</p>\n";
     
@@ -219,7 +220,7 @@ const std::string HTML_YearList::to_html() const {
         
         type[0] = std::toupper(type[0]);
         
-        html << "<h3 style=\"color: #649600;\">" << type << "</h3>\n";
+        html << "<h3 style=\"color: " << program_config::color_titles << "\">" << type << "</h3>\n";
         html << "<p></p>\n";
         html << "<ul>\n";
         html << "<ul>\n\n";
@@ -303,8 +304,6 @@ void HTML_File::operator+=( const BibTeXItem* bibtex ) {
 const std::string HTML_File::to_html( const std::string pagetitle ) const {
     std::stringstream html;
     
-    /*html << "<div id=\"inhalt\" class=\"inhalt_breit\">\n";
-    html << "<h1 id=\"seitenueberschrift\">Hauptinhalt</h1>\n";*/
     html << "<a id=\"inhalt-sprungmarke\"></a>\n";
     html << "<h2 class=\"rubriktitel\">" << pagetitle << "</h2>\n";
     html << "<div class=\"aktuelles_meldung\">\n";

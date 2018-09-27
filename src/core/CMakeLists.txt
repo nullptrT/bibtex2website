@@ -21,7 +21,7 @@ include_directories(.)
 
 file(GLOB WEBSITE_GENERATOR_CORE_SRC *.cpp)
 
-add_library( website_generator_core ${WEBSITE_GENERATOR_CORE_SRC} )
+add_library( website_generator_core ${WEBSITE_GENERATOR_CORE_SRC} ../config.cpp )
 target_link_libraries( website_generator_core logcpp )
 if ( UNIX )
     find_package(Threads)
