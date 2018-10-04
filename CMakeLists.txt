@@ -19,14 +19,11 @@
 
 cmake_minimum_required(VERSION 3.0)
 
-set( QT_LIB_PATH "C:\\lib\\Qt" )
-set( QT_VERSION "5.10.1" )
-
-project(website_generator LANGUAGES C CXX)
+project(bibtex2website LANGUAGES CXX)
 set (VERBOSE 1)
 set (website_generator_VERSION_MAJOR 1)
 set (website_generator_VERSION_MINOR 0)
-set (website_generator_VERSION_RELEASE 0)
+set (website_generator_VERSION_RELEASE 1)
 set (website_generator_VERSION_PATCH "")
 set (website_generator_VERSION "${website_generator_VERSION_MAJOR}.${website_generator_VERSION_MINOR}.${website_generator_VERSION_RELEASE}${website_generator_VERSION_PATCH}")
 set (website_generator_VERSION "${website_generator_VERSION}")
