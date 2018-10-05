@@ -1,5 +1,5 @@
 /*
- * BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+ * BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
  * Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ MainWindow::MainWindow( QWidget* parent )
     ui->setupUi(this);
 
     this->setWindowTitle( "BibTeX2Website" );
-    ui->status->setText("BibTeX2WebsiteGUI v" + QString(website_generator_VERSION));
+    ui->status->setText("BibTeX2WebsiteGUI v" + QString(bibtex2website_VERSION));
     
     QObject::connect( ui->button_choose_folder, &QPushButton::clicked
                     , this, &MainWindow::on_choose_Directory );
@@ -57,11 +57,11 @@ MainWindow::~MainWindow() {
 void MainWindow::on_choose_Directory() {
     if ( ui->folder->text().length() > 0 ) {
         if ( QFile::exists( ui->folder->text() ) ) {
-            mw_file_dialog = new QFileDialog( 0, "Verzeichnis mit BibTeX-Dateien wählen..."
+            mw_file_dialog = new QFileDialog( 0, "Choose top-level directory with BibTeX files..."
                                             , ui->folder->text() );
         }
     } else {
-        mw_file_dialog = new QFileDialog( 0, "Verzeichnis mit BibTeX-Dateien wählen..." );
+        mw_file_dialog = new QFileDialog( 0, "Choose top-level directory with BibTeX files..." );
     }
     
     mw_file_dialog->setFileMode( QFileDialog::Directory );
@@ -79,11 +79,11 @@ void MainWindow::on_choose_Directory() {
 void MainWindow::on_choose_File() {
     if ( ui->file->text().length() > 0 ) {
         if ( QFile::exists( ui->file->text() ) ) {
-            mw_file_dialog = new QFileDialog( 0, "HTML-Ausgabe-Datei wählen..."
+            mw_file_dialog = new QFileDialog( 0, "Choose HTML output file..."
                                             , ui->file->text() );
         }
     } else {
-        mw_file_dialog = new QFileDialog( 0, "HTML-Ausgabe-Datei wählen..." );
+        mw_file_dialog = new QFileDialog( 0, "Choose HTML output file..." );
     }
     
     mw_file_dialog->setFileMode( QFileDialog::AnyFile );
@@ -108,30 +108,30 @@ void MainWindow::on_generate() {
                 program_config::color_titles = ui->color_code->text().toStdString();
             }
             
-            ui->status->setText("[WebsiteGenerator/BibTeX] - Parse BibTeX-Dateien...");
+            ui->status->setText("[WebsiteGenerator/BibTeX] - Parsing BibTeX files...");
             BibTeX* tex = new BibTeX();
             try {
                 tex->parse_bibtex_files( ui->folder->text().toStdString() );
             } catch ( BibTeX::Exception& texe ) {
-                ui->status->setText("Konnte BibTeX nicht parsen: " + QString(texe.what()));
+                ui->status->setText("Could not parse BibTeX: " + QString(texe.what()));
             }
             
-            ui->status->setText("[WebsiteGenerator/HTML] - Generiere HTML...");
+            ui->status->setText("[WebsiteGenerator/HTML] - Generating HTML...");
             try {
                 HTML_File* html = HTML::generate( tex );
                 html->to_file( ui->file->text().toStdString()
                              , ui->title->text().toStdString() );
             } catch ( HTML::Exception& htmle ) {
-                ui->status->setText("Konnte HTML nicht generieren: " + QString(htmle.what()));
+                ui->status->setText("Could not generate HTML: " + QString(htmle.what()));
             } catch ( std::exception& e ) {
-                ui->status->setText("Konnte HTML nicht schreiben: " + QString(e.what()));
+                ui->status->setText("Could not generate HTML: " + QString(e.what()));
             }
-            ui->status->setText("Generiert.");
+            ui->status->setText("Generated HTML.");
         } else {
-            ui->status->setText("Verzeichnis existiert nicht.");
+            ui->status->setText("Directory does not exist.");
         }
     } else {
-        ui->status->setText("Alle Felder müssen ausgefüllt sein.");
+        ui->status->setText("All fields but color code must be filled.");
     }
 }
 

@@ -4,3 +4,7 @@ build*/*
 *.kdev4
 *.user
 docs/*
+/bin
+/examples
+pkg/arch/pkg
+pkg/arch/src

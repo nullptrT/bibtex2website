@@ -1,5 +1,5 @@
 /*
- * BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+ * BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
  * Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify

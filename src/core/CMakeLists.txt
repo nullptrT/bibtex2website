@@ -1,6 +1,6 @@
 
 #
-#  BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+#  BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
 #  Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,15 @@
 
 include_directories(.)
 
-file(GLOB WEBSITE_GENERATOR_CORE_SRC *.cpp)
+file( GLOB BIBTEX_TO_WEBSITE_GENERATOR_HEADERS *.hpp )
+install(FILES ${BIBTEX_TO_WEBSITE_GENERATOR_HEADERS} DESTINATION ${BIBTEX_TO_HTML_HEADER_INSTALL_DIR}/ )
 
-add_library( website_generator_core ${WEBSITE_GENERATOR_CORE_SRC} ../config.cpp )
-target_link_libraries( website_generator_core logcpp )
+file( GLOB BIBTEX_TO_WEBSITE_GENERATOR_CORE_SRC *.cpp )
+
+add_library( bibtex2html ${BIBTEX_TO_WEBSITE_GENERATOR_CORE_SRC} ../config.cpp )
+target_link_libraries( bibtex2html logcpp )
 if ( UNIX )
     find_package(Threads)
-    target_link_libraries( website_generator_core  ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} stdc++fs )
+    target_link_libraries( bibtex2html  ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} stdc++fs )
+    install( TARGETS bibtex2html DESTINATION ${BIBTEX_TO_HTML_LIB_INSTALL_DIR}/ )
 endif( UNIX )

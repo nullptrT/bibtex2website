@@ -1,6 +1,6 @@
 
 #
-#  BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+#  BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
 #  Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -28,11 +28,11 @@ if ( ENABLE_QT_GUI )
 endif()
 
 if ( UNIX )
-    add_executable( bibtex2website_generator main.cpp )
+    add_executable( bibtex2website main.cpp )
 else()
-    add_executable( bibtex2website_generator WIN32 main.cpp )
+    add_executable( bibtex2website WIN32 main.cpp )
 endif()
-set_target_properties( bibtex2website_generator PROPERTIES LINK_FLAGS "-static" )
-target_link_libraries( bibtex2website_generator website_generator_core logcpp )
+set_target_properties( bibtex2website PROPERTIES LINK_FLAGS "-static" )
+target_link_libraries( bibtex2website bibtex2html logcpp )
 
-install_targets( ${DESTDIR}/bin bibtex2website_generator )
+install( TARGETS bibtex2website RUNTIME DESTINATION ${DESTDIR}/bin CONFIGURATIONS Release )
