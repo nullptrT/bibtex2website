@@ -1,6 +1,6 @@
 
 #
-#  BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+#  BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
 #  Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@ cmake_minimum_required(VERSION 3.0)
 
 project(bibtex2website LANGUAGES CXX)
 set (VERBOSE 1)
-set (website_generator_VERSION_MAJOR 1)
-set (website_generator_VERSION_MINOR 0)
-set (website_generator_VERSION_RELEASE 1)
-set (website_generator_VERSION_PATCH "")
-set (website_generator_VERSION "${website_generator_VERSION_MAJOR}.${website_generator_VERSION_MINOR}.${website_generator_VERSION_RELEASE}${website_generator_VERSION_PATCH}")
-set (website_generator_VERSION "${website_generator_VERSION}")
-add_definitions( -Dwebsite_generator_VERSION="${website_generator_VERSION}" )
+set (bibtex2website_VERSION_MAJOR 1)
+set (bibtex2website_VERSION_MINOR 1)
+set (bibtex2website_VERSION_RELEASE 1)
+set (bibtex2website_VERSION_PATCH "")
+set (bibtex2website_VERSION "${bibtex2website_VERSION_MAJOR}.${bibtex2website_VERSION_MINOR}.${bibtex2website_VERSION_RELEASE}${bibtex2website_VERSION_PATCH}")
+set (bibtex2website_VERSION "${bibtex2website_VERSION}")
+add_definitions( -Dbibtex2website_VERSION="${bibtex2website_VERSION}" )
 
 
 if( NOT CMAKE_BUILD_TYPE )
@@ -51,7 +51,7 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall" )
 if( WIN32 )
-  include(CheckCXXCompilerFlag)
+    include(CheckCXXCompilerFlag)
 	CHECK_CXX_COMPILER_FLAG("/std:c++17" _cpp_latest_flag_supported)
 	add_compile_options( "/std:c++17" )
 else()
@@ -69,12 +69,20 @@ set(BUILD_STATIC_LIBRARIES ON)
 if( UNIX )
     find_package(Doxygen)
     if(DOXYGEN_FOUND)
-        message("-- Enabled doc_website_generator target for make")
+        message("-- Enabled doc_bibtex_to_website target for make")
         configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-        add_custom_target(doc_website_generator ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
+        add_custom_target(doc_bibtex_to_website ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
     endif()
 endif()
 
+if( DESTDIR )
+else()
+    set( DESTDIR ${CMAKE_CURRENT_BINARY_DIR} )
+endif()
+
+set( BIBTEX_TO_WEBSITE_BIN_INSTALL_DIR ${DESTDIR}/bin )
+set( BIBTEX_TO_WEBSITE_LIB_INSTALL_DIR ${DESTDIR}/lib )
+set( BIBTEX_TO_WEBSITE_HEADER_INSTALL_DIR ${DESTDIR}/include/bibtex2html )
 
 if( UNIX )
     set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")

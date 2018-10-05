@@ -1,5 +1,5 @@
 /*
- * BibTeX2WebsiteGenerator - A program that can generate an ordered website out of BibTeX files
+ * BibTeX2Website - A program and library that can generate an ordered website out of BibTeX files
  * Copyright (C) 2018 Sebastian Lau <lauseb644@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,16 @@
 
 
 void help() {
-    std::cout << "Usage: bibtex2website_generator <PATH_TO_FILES> <OUTPUT> <PAGE_TITLE> [<COLOR_CODE>] [--verbose]" << std::endl;
+    std::cout << "Usage: bibtex2website <PATH_TO_FILES> <OUTPUT> <PAGE_TITLE> [<COLOR_CODE>] [--verbose]" << std::endl;
+    std::cout << std::endl;
+    std::cout << "\tPATH_TO_FILES\tThe path to the top-level directory, where all BibTeX files are located." << std::endl;
+    std::cout << "\t\t\tThe maximum level of directories is two, so you can create subfolders that order by month or category." << std::endl;
+    std::cout << "\tOUTPUT\t\tThe path to the html file to write the html output to." << std::endl;
+    std::cout << "\tPAGE_TITLE\tThe title of the website." << std::endl;
+    std::cout << "\tCOLOR_CODE\tBy default, a green is chosen for the titles. Optionally you can define an own color code like #ffffff here." << std::endl;
+    std::cout << std::endl;
+    std::cout << "\t--verbose\tGet more output about what the program does." << std::endl;
+    std::cout << std::endl;
 }
 
 
@@ -42,7 +51,7 @@ int main(int argc, char *argv[])
 #ifdef __unix__
     stdlog << logcpp::sty_bold;
 #endif
-    stdlog << "BibTeX2WebsiteGenerator v" << website_generator_VERSION << " (https://git.0ptr.de/nullptr_t/bibtex2website)";
+    stdlog << "BibTeX2Website v" << bibtex2website_VERSION << " (https://git.0ptr.de/nullptr_t/bibtex2website)";
 #ifdef __unix__
     stdlog << logcpp::ctl_reset_all;
 #endif
@@ -74,7 +83,7 @@ int main(int argc, char *argv[])
     
     stdlog.set_critical_log_function(&std::abort);
     
-    stdlog << logcpp::normal << "[WebsiteGenerator/BibTeX] - Parsing BibTeX files..." << logcpp::endrec;
+    stdlog << logcpp::normal << "[BibTeX2Website/BibTeX] - Parsing BibTeX files..." << logcpp::endrec;
     BibTeX* tex = new BibTeX();
     try {
         tex->parse_bibtex_files( argv[1] );
@@ -82,7 +91,7 @@ int main(int argc, char *argv[])
         stdlog << logcpp::critical << "Failed to parse BibTeX: " << texe.what() << logcpp::endrec;
     }
     
-    stdlog << logcpp::normal << "[WebsiteGenerator/HTML] - Generating HTML..." << logcpp::endrec;
+    stdlog << logcpp::normal << "[BibTeX2Website/HTML] - Generating HTML..." << logcpp::endrec;
     try {
         HTML_File* html = HTML::generate( tex );
         html->to_file( argv[2], argv[3] );
